@@ -1,0 +1,1 @@
+from .gpw_extractors import GPWBaseInfoExtractor
