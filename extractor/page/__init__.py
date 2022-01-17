@@ -1,2 +1,2 @@
-from .stock_page import Indicators, Dividends, ProfitLossReport, ProfitLossAccount, BalanceReport, BalanceAccount
-from .stock_page import StockPage
+from .stock_page import Indicators, Dividend, Dividends, ProfitLossReport, ProfitLossAccount, BalanceReport
+from .stock_page import BalanceAccount, StockPage

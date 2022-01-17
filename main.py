@@ -1,18 +1,16 @@
-from bs4 import BeautifulSoup
-import requests
-
-from extractor import GPWBaseInfoExtractor
+from extractor import GPWIndicatorsExtractor, GPWProfitLossExtractor, GPWBalanceExtractor, GPWDividendExtractor, \
+    GPWCompanyExtractor, GPWBaseInfoExtractor, GPWStockMarketInfoExtractor
+from configuration import conf_properties
 
 if __name__ == '__main__':
-    page = requests.get("https://www.biznesradar.pl/notowania/KGHM")
-    soup = BeautifulSoup(page.content, 'html.parser')
-    gpw_extractor = GPWBaseInfoExtractor()
-    print(gpw_extractor.extract(soup))
-    # rows = soup.find_all('table', id="profileSummaryCurrent")
-    # rows = soup.find_all('table', class_="profileSummaryCurrent")
-    # rows = soup.find_all(text='Kurs:')
 
+    gpw_company_extractor = GPWCompanyExtractor(
+        GPWBaseInfoExtractor(),
+        GPWIndicatorsExtractor(),
+        GPWProfitLossExtractor(),
+        GPWBalanceExtractor(),
+        GPWDividendExtractor()
+    )
+    gpw_stock_market_info_extractor = GPWStockMarketInfoExtractor(gpw_company_extractor)
+    companies = gpw_stock_market_info_extractor.extract(conf_properties.get_url())
     print("found")
-
-
-

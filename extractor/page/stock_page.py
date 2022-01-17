@@ -26,10 +26,9 @@ class Indicators:
 
 
 class BalanceReport:
-    def __init__(self, year: int, assets: int, liabilities: int, short_term_obligations: int, long_term_obligations: int):
+    def __init__(self, year: int, assets: int, short_term_obligations: int, long_term_obligations: int):
         self._year = year
         self._assets = assets
-        self._liabilities = liabilities
         self._short_term_obligations = short_term_obligations
         self._long_term_obligations = long_term_obligations
 
@@ -53,7 +52,7 @@ class BalanceAccount:
     def __init__(self):
         self._balance_reports = {}
 
-    def add_balance_report(self, balance_report: BalanceReport):
+    def add(self, balance_report: BalanceReport):
         self._balance_reports[balance_report.year()] = balance_report
 
     def get_reports(self) -> Dict[int, BalanceReport]:
@@ -61,13 +60,13 @@ class BalanceAccount:
 
 
 class ProfitLossReport:
-    def __init__(self, year: int, income: int, earnings: int, net_earnings: int):
+    def __init__(self, year: str, income: int, earnings: int, net_earnings: int):
         self._year = year
         self._income = income
         self._earnings = earnings
         self._net_earnings = net_earnings
 
-    def year(self) -> int:
+    def year(self) -> str:
         return self._year
 
     def income(self) -> int:
@@ -87,33 +86,54 @@ class ProfitLossAccount:
     def add(self, profit_loss_report: ProfitLossReport):
         self._profitLossReports[profit_loss_report.year()] = profit_loss_report
 
-    def get_reports(self) -> Dict[int, ProfitLossReport]:
+    def get_reports(self) -> Dict[str, ProfitLossReport]:
         return self._profitLossReports
+
+
+class Dividend:
+    def __init__(self, year: int, value_per_share: float, dividend_value: int):
+        self._year = year
+        self._value_per_share = value_per_share
+        self._dividend_value = dividend_value
+
+    def year(self) -> int:
+        return self._year
+
+    def value_per_share(self) -> float:
+        return self._value_per_share
+
+    def dividend_value(self) -> int:
+        return self._dividend_value
 
 
 class Dividends:
     def __init__(self):
         self._dividends = {}
 
-    def add_dividend(self, year: int, value: float):
-        self._dividends[year] = value
+    def add(self, dividend: Dividend):
+        self._dividends[dividend.year()] = dividend
 
-    def get_dividends(self) -> Dict[int, float]:
+    def get_dividends(self) -> Dict[int, Dividend]:
         return self._dividends
 
 
 class StockPage:
     def __init__(self,
+                 url: str,
                  current_price: float,
                  indicators: Indicators,
                  profit_loss_account: ProfitLossAccount,
                  balance_account: BalanceAccount,
                  dividends: Dividends):
+        self._url = url
         self._current_price = current_price
         self._indicators = indicators
         self._profit_loss_account = profit_loss_account
         self._balance_account = balance_account
         self._dividends = dividends
+
+    def url(self) -> str:
+        return self._url
 
     def current_price(self) -> float:
         return self._current_price
