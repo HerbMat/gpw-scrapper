@@ -1,0 +1,1 @@
+from .analysers import SimpleStockAnalyser
